@@ -51,5 +51,10 @@ namespace crud_with_dotnetApi.Data
              _appDbContext.Employees.Remove(emp);
             await _appDbContext.SaveChangesAsync();
         }
+
+        public async Task<Employee>GetEmployeeByName(string name)
+        {
+            return await _appDbContext.Employees.Where(x => x.Name == name).FirstOrDefaultAsync();
+        }
     }
 }

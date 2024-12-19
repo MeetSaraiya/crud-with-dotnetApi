@@ -1,4 +1,5 @@
 ﻿using crud_with_dotnetApi.Data;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -14,6 +15,7 @@ namespace crud_with_dotnetApi.Controllers
         {
             _employeeRepositery = employeeRepositery;
         }
+        [Authorize]
         [HttpPost]
         public async Task<ActionResult> AddEmployee([FromBody] Employee model)
         {
@@ -22,13 +24,14 @@ namespace crud_with_dotnetApi.Controllers
 
         }
 
+        [Authorize]
         [HttpGet]
         public async Task<ActionResult> GetEmployees()
         {
             var employeeList = await _employeeRepositery.GetEmployeesAsync();
             return Ok(employeeList);
         }
-
+        [Authorize]
         [HttpGet("{id}")]
         public async Task<ActionResult> GetEmployeeById([FromRoute] int id)
         {
@@ -37,6 +40,7 @@ namespace crud_with_dotnetApi.Controllers
         }
 
         [HttpPut("{id}")]
+        [Authorize]
         public async Task<ActionResult> UpdateEmployee([FromRoute]int id, [FromBody]Employee model)
         {
              await _employeeRepositery.UpdateEmployeeAsync(id, model);
@@ -44,6 +48,7 @@ namespace crud_with_dotnetApi.Controllers
         }
 
         [HttpDelete("({id})")]
+        [Authorize]
         public async Task<ActionResult> DeleteEmployee([FromRoute]int id)
         {
             await _employeeRepositery.DeleteEmployee(id);
